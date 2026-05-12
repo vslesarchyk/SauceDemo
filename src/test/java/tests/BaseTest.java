@@ -1,8 +1,11 @@
+package tests;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.*;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -10,6 +13,12 @@ import java.util.HashMap;
 public class BaseTest {
 
     WebDriver driver;
+    LoginPage loginPage;
+    ProductsPage productsPage;
+    CartPage cartPage;
+    CheckoutInformationPage checkoutInformationPage;
+    CheckoutOverviewPage checkoutOverviewPage;
+    CheckoutCompletePage checkoutCompletePage;
 
     @BeforeMethod (alwaysRun = true)
     public void setup() {
@@ -26,6 +35,13 @@ public class BaseTest {
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        loginPage = new LoginPage(driver);
+        productsPage = new ProductsPage(driver);
+        cartPage = new CartPage(driver);
+        checkoutInformationPage = new CheckoutInformationPage(driver);
+        checkoutOverviewPage = new CheckoutOverviewPage(driver);
+        checkoutCompletePage = new CheckoutCompletePage(driver);
     }
 
     @AfterMethod (alwaysRun = true)
