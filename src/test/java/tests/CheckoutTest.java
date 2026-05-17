@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.BasePage;
 
@@ -7,10 +8,14 @@ import static org.testng.Assert.assertEquals;
 
 public class CheckoutTest extends BaseTest {
 
-    @Test
+    @Test(
+            description = "Проверка валидного заполнения данных о покупателе",
+            testName = "checkCheckoutWithPositiveCred",
+            groups = {"smoke", "regression"}
+    )
     public void checkCheckoutWithPositiveCred() {
         loginPage.open();
-        loginPage.login(BasePage.LOGIN_USER,BasePage.PASSWORD);
+        loginPage.login("standard_user", "secret_sauce");
         productsPage.addToCart("Sauce Labs Backpack");
         productsPage.clickCart();
         checkoutInformationPage.clickCheckout();
@@ -20,55 +25,29 @@ public class CheckoutTest extends BaseTest {
                 "Incorrect title");
     }
 
-    @Test
-    public void checkCheckoutWithEmptyFirstName() {
-        loginPage.open();
-        loginPage.login(BasePage.LOGIN_USER,BasePage.PASSWORD);
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout("", "Ivanov", "12345");
-        assertEquals(checkoutInformationPage.getErrorMessage(),
-                "Error: First Name is required",
-                "Incorrect error message");
+    @DataProvider(name = "Параметризированный тест для негативного checkout")
+    public Object[][] loginData() {
+        return new Object[][]{
+                {"", "Ivanov", "12345", "Error: First Name is required"},
+                {"Ivan", "", "12345", "Error: Last Name is required"},
+                {"Ivan", "Ivanov", "", "Error: Postal Code is required"},
+                {"", "", "", "Error: First Name is required"}
+        };
     }
 
-    @Test
-    public void checkCheckoutWithEmptyLastName() {
+    @Test(dataProvider = "Параметризированный тест для негативного checkout",
+            testName = "heckCheckoutWithNegativeCred",
+            groups = {"regression", "smoke"}
+    )
+    public void checkCheckoutWithNegativeCred(String firstName, String lastName, String zipCode, String errorMessage) {
         loginPage.open();
-        loginPage.login(BasePage.LOGIN_USER,BasePage.PASSWORD);
+        loginPage.login("standard_user", "secret_sauce");
         productsPage.addToCart("Sauce Labs Backpack");
         productsPage.clickCart();
         checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout("Ivan", "", "12345");
+        checkoutInformationPage.checkout(firstName, lastName, zipCode);
         assertEquals(checkoutInformationPage.getErrorMessage(),
-                "Error: Last Name is required",
-                "Incorrect error message");
-    }
-
-    @Test
-    public void checkCheckoutWithEmptyZipCode() {
-        loginPage.open();
-        loginPage.login(BasePage.LOGIN_USER,BasePage.PASSWORD);
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout("Ivan", "Ivanov", "");
-        assertEquals(checkoutInformationPage.getErrorMessage(),
-                "Error: Postal Code is required",
-                "Incorrect error message");
-    }
-
-    @Test
-    public void checkCheckoutWithEmptyFields() {
-        loginPage.open();
-        loginPage.login(BasePage.LOGIN_USER,BasePage.PASSWORD);
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout("", "", "");
-        assertEquals(checkoutInformationPage.getErrorMessage(),
-                "Error: First Name is required",
+                errorMessage,
                 "Incorrect error message");
     }
 }
