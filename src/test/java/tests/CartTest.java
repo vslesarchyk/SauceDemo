@@ -10,7 +10,10 @@ import static org.testng.Assert.assertEquals;
 
 public class CartTest extends BaseTest {
 
-    @Test
+    @Test (description = "Проверка добавления двух товаров в корзину",
+            testName = "checkAddProductsFromProductsPage",
+            groups = {"smoke", "regression"}
+    )
     public void checkAddProductsFromProductsPage() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open();
@@ -29,7 +32,10 @@ public class CartTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(description = "Проверка удаления одного товара из корзины",
+            testName = "checkRemoveProductFromCart",
+            groups = {"smoke", "regression"}
+    )
         public void checkRemoveProductFromCart() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open();
