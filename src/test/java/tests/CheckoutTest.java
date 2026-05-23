@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.BasePage;
@@ -13,6 +14,11 @@ public class CheckoutTest extends BaseTest {
             testName = "checkCheckoutWithPositiveCred",
             groups = {"smoke", "regression"}
     )
+    @Owner("Slesarchyk V.A.")
+    @Epic("Sauce Demo 2")
+    @Feature("Checkout")
+    @Story("Checkout with credentials")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkCheckoutWithPositiveCred() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -39,6 +45,11 @@ public class CheckoutTest extends BaseTest {
             testName = "heckCheckoutWithNegativeCred",
             groups = {"regression", "smoke"}
     )
+    @Owner("Slesarchyk V.A.")
+    @Epic("Sauce Demo 2")
+    @Feature("Checkout")
+    @Story("Checkout with credentials")
+    @Severity(SeverityLevel.NORMAL)
     public void checkCheckoutWithNegativeCred(String firstName, String lastName, String zipCode, String errorMessage) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
