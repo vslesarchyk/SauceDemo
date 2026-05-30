@@ -27,12 +27,11 @@ public class CartTest extends BaseTest {
     @Issue("BUG-01")
     public void checkAddProductsFromProductsPage() {
         SoftAssert softAssert = new SoftAssert();
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.addToCart("Test.allTheThings() T-Shirt (Red)");
-        productsPage.clickCart();
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .addToCart("Test.allTheThings() T-Shirt (Red)")
+                .clickCart();
         List<String> products = cartPage.getProductItems();
         softAssert.assertTrue(
                 products.contains("Sauce Labs Backpack"),
@@ -53,14 +52,13 @@ public class CartTest extends BaseTest {
     @Story("Remove product from cart")
     @Severity(SeverityLevel.NORMAL)
     public void checkRemoveProductFromCart() {
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .addToCart("Test.allTheThings() T-Shirt (Red)")
+                .clickCart()
+                .removeFromCart("Test.allTheThings() T-Shirt (Red)");
         SoftAssert softAssert = new SoftAssert();
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.addToCart("Test.allTheThings() T-Shirt (Red)");
-        productsPage.clickCart();
-        cartPage.removeFromCart("Test.allTheThings() T-Shirt (Red)");
         List<String> products = cartPage.getProductItems();
         softAssert.assertTrue(products.contains("Sauce Labs Backpack"),
                 "Sauce Labs Backpack is missing");

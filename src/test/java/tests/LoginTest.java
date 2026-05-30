@@ -26,8 +26,8 @@ public class LoginTest extends BaseTest {
     @TmsLink("SD-To1")
     @Issue("BUG-01")
     public void checkLoginWithPositiveCred() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.open()
+                .login("standard_user", "secret_sauce");
         assertEquals(productsPage.getTitle(),
                 "Products",
                 "SO BAD");
@@ -50,8 +50,8 @@ public class LoginTest extends BaseTest {
     @Story("Log in with negative credential")
     @Severity(SeverityLevel.NORMAL)
     public void checkLoginTestWithNegativeCred1(String user, String password, String errorMessage) {
-        loginPage.open();
-        loginPage.login(user, password);
+        loginPage.open()
+                .loginWithNegativeCred(user, password);
         assertEquals(loginPage.getErrorMessage(),
                 errorMessage,
                 "SO BAD");

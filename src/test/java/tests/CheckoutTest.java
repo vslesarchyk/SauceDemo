@@ -20,12 +20,12 @@ public class CheckoutTest extends BaseTest {
     @Story("Checkout with credentials")
     @Severity(SeverityLevel.CRITICAL)
     public void checkCheckoutWithPositiveCred() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout("Ivan", "Ivanov", "12345");
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .clickCart()
+                .clickCheckout()
+                .checkoutWithPositiveCred("Ivan", "Ivanov", "12345");
         assertEquals(checkoutOverviewPage.getTitle(),
                 "Checkout: Overview",
                 "Incorrect title");
@@ -51,12 +51,13 @@ public class CheckoutTest extends BaseTest {
     @Story("Checkout with credentials")
     @Severity(SeverityLevel.NORMAL)
     public void checkCheckoutWithNegativeCred(String firstName, String lastName, String zipCode, String errorMessage) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout(firstName, lastName, zipCode);
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .clickCart()
+                .isPageOpened()
+                .clickCheckout()
+                .checkoutWithNegativeCred(firstName, lastName, zipCode);
         assertEquals(checkoutInformationPage.getErrorMessage(),
                 errorMessage,
                 "Incorrect error message");
