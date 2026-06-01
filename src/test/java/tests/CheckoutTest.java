@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.BasePage;
@@ -13,13 +14,18 @@ public class CheckoutTest extends BaseTest {
             testName = "checkCheckoutWithPositiveCred",
             groups = {"smoke", "regression"}
     )
+    @Owner("Slesarchyk V.A.")
+    @Epic("Sauce Demo 2")
+    @Feature("Checkout")
+    @Story("Checkout with credentials")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkCheckoutWithPositiveCred() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout("Ivan", "Ivanov", "12345");
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .clickCart()
+                .clickCheckout()
+                .checkoutWithPositiveCred("Ivan", "Ivanov", "12345");
         assertEquals(checkoutOverviewPage.getTitle(),
                 "Checkout: Overview",
                 "Incorrect title");
@@ -39,13 +45,19 @@ public class CheckoutTest extends BaseTest {
             testName = "heckCheckoutWithNegativeCred",
             groups = {"regression", "smoke"}
     )
+    @Owner("Slesarchyk V.A.")
+    @Epic("Sauce Demo 2")
+    @Feature("Checkout")
+    @Story("Checkout with credentials")
+    @Severity(SeverityLevel.NORMAL)
     public void checkCheckoutWithNegativeCred(String firstName, String lastName, String zipCode, String errorMessage) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        checkoutInformationPage.clickCheckout();
-        checkoutInformationPage.checkout(firstName, lastName, zipCode);
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .clickCart()
+                .isPageOpened()
+                .clickCheckout()
+                .checkoutWithNegativeCred(firstName, lastName, zipCode);
         assertEquals(checkoutInformationPage.getErrorMessage(),
                 errorMessage,
                 "Incorrect error message");

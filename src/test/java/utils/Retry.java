@@ -1,8 +1,6 @@
-package tests;
-
+package utils;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
-
 public class Retry implements IRetryAnalyzer {
 
     private int attempt = 1;
