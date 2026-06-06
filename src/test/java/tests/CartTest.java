@@ -28,7 +28,7 @@ public class CartTest extends BaseTest {
     public void checkAddProductsFromProductsPage() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .addToCart("Sauce Labs Backpack")
                 .addToCart("Test.allTheThings() T-Shirt (Red)")
                 .clickCart();
@@ -53,7 +53,7 @@ public class CartTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void checkRemoveProductFromCart() {
         loginPage.open()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .addToCart("Sauce Labs Backpack")
                 .addToCart("Test.allTheThings() T-Shirt (Red)")
                 .clickCart()

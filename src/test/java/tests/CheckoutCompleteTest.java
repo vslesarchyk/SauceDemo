@@ -20,7 +20,7 @@ public class CheckoutCompleteTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void checkPageNavigationToCheckoutComplete() {
         loginPage.open()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .addToCart("Sauce Labs Backpack")
                 .clickCart()
                 .clickCheckout()

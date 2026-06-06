@@ -8,8 +8,8 @@ public class LocatorsTest extends BaseTest {
     @Test
     public void checkLocators() {
         driver.get("https://www.saucedemo.com/");
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.name("password")).sendKeys("secret_sauce");
+        driver.findElement(By.id("user-name")).sendKeys(user);
+        driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.className("submit-button")).click();
         driver.findElement(By.tagName("div"));
         driver.findElement(By.linkText("Facebook"));
