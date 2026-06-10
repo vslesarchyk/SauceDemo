@@ -45,12 +45,19 @@ public class BaseTest {
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-gpu");
-            options.addArguments("--headless");
+            if(System.getProperty("headless", "true").equals("true")){
+                options.addArguments("--headless");
+            }
             driver = new ChromeDriver(options);
 
         } else if (browser.equalsIgnoreCase("edge")) {
             EdgeOptions options =new EdgeOptions();
-            options.addArguments("--headless");
+            if(System.getProperty("headless", "true").equals("true")){
+                options.addArguments("--headless");
+            }
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
             driver = new EdgeDriver();
         }
 
